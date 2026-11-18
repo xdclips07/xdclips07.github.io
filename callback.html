@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-br"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Conectar conta · KickClipper</title><meta name="robots" content="noindex"><link rel="stylesheet" href="style.css"></head><body>
+<header><a class="logo" href="index.html">Kick<span>Clipper</span></a></header>
+<main><article class="doc" style="text-align:center">
+<h1 id="h">✅ Quase lá!</h1>
+<p id="p">Clique no botão para copiar o endereço e cole na janela preta do KickClipper (botão direito → colar → Enter).</p>
+<textarea id="u" rows="4" readonly></textarea><br><br>
+<button class="btn" id="b">Copiar endereço</button>
+</article></main>
+<script>
+var u = document.getElementById('u'), b = document.getElementById('b'), q = new URLSearchParams(location.search);
+u.value = location.href;
+if (q.get('error')) {
+  document.getElementById('h').textContent = '❌ Autorização recusada';
+  document.getElementById('p').textContent = 'Motivo: ' + (q.get('error_description') || q.get('error')) + '. Tente de novo pelo menu do KickClipper.';
+} else if (!q.get('code')) {
+  document.getElementById('h').textContent = 'Página de retorno do login';
+  document.getElementById('p').textContent = 'Esta página só funciona depois que você autoriza o app no TikTok (menu do KickClipper, opção 3).';
+}
+b.onclick = function () {
+  u.select();
+  try { navigator.clipboard.writeText(u.value); } catch (e) { document.execCommand('copy'); }
+  b.textContent = 'Copiado! ✔';
+};
+</script>
+</body></html>
